@@ -1,4 +1,3 @@
-node_modules/bootstrap
 scss/custom.css.map
 scss/custom.scss
-node_modules/three/src
+node_modules
