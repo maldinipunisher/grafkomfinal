@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="scss/custom.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <title>Profile</title>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Add smooth scrolling to all links
+        $("a").on('click', function (event) {
+
+            // Make sure this.hash has a value before overriding default behavior
+            if (this.hash !== "") {
+                // Prevent default anchor click behavior
+                event.preventDefault();
+
+                // Store hash
+                var hash = this.hash;
+
+                // Using jQuery's animate() method to add smooth page scroll
+                // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+                $('html, body').animate({
+                    scrollTop: $(hash).offset().top
+                }, 800, function () {
+
+                    // Add hash (#) to URL when done scrolling (default click behavior)
+                    window.location.hash = hash;
+                });
+            } // End if
+        });
+    });
+</script>
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+
+    .pt-8 {
+        padding-top: 6rem;
+    }
+
+
+    .hori-timeline .events {
+        border-top: 3px solid #e9ecef;
+    }
+
+    .hori-timeline .events .event-list {
+        display: block;
+        position: relative;
+        text-align: center;
+        padding-top: 70px;
+        margin-right: 0;
+    }
+
+    .hori-timeline .events .event-list:before {
+        content: "";
+        position: absolute;
+        height: 36px;
+        border-right: 2px dashed #dee2e6;
+        top: 0;
+    }
+
+    .hori-timeline .events .event-list .event-date {
+        position: absolute;
+        top: 38px;
+        left: 0;
+        right: 0;
+        width: 75px;
+        margin: 0 auto;
+        border-radius: 4px;
+        padding: 2px 4px;
+    }
+
+    @media (min-width: 1140px) {
+        .hori-timeline .events .event-list {
+            display: inline-block;
+            width: 24%;
+            padding-top: 45px;
+        }
+
+        .hori-timeline .events .event-list .event-date {
+            top: -12px;
+        }
+    }
+
+    .bg-soft-primary {
+        background-color: rgba(64, 144, 203, .3) !important;
+    }
+
+    .bg-soft-success {
+        background-color: rgba(71, 189, 154, .3) !important;
+    }
+
+    .bg-soft-danger {
+        background-color: rgba(231, 76, 94, .3) !important;
+    }
+
+    .bg-soft-warning {
+        background-color: rgba(249, 213, 112, .3) !important;
+    }
+
+    .card {
+        border: none;
+        margin-bottom: 24px;
+        -webkit-box-shadow: 0 0 13px 0 rgba(236, 236, 241, .44);
+        box-shadow: 0 0 13px 0 rgba(236, 236, 241, .44);
+    }
+
+    .progress {
+        width: 150px;
+        height: 150px;
+        line-height: 150px;
+        background: none;
+        margin: 0 auto;
+        box-shadow: none;
+        position: relative;
+    }
+
+    .progress:after {
+        content: "";
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .progress>span {
+        width: 50%;
+        height: 100%;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        z-index: 1;
+    }
+
+    .progress .progress-left {
+        left: 0;
+    }
+
+    .progress .progress-bar {
+        width: 100%;
+        height: 100%;
+        background: none;
+        border-width: 2px;
+        border-style: solid;
+        position: absolute;
+        top: 0;
+    }
+
+    .progress .progress-left .progress-bar {
+        left: 100%;
+        border-top-right-radius: 80px;
+        border-bottom-right-radius: 80px;
+        border-left: 0;
+        -webkit-transform-origin: center left;
+        transform-origin: center left;
+    }
+
+    .progress .progress-right {
+        right: 0;
+    }
+
+    .progress .progress-right .progress-bar {
+        left: -100%;
+        border-top-left-radius: 80px;
+        border-bottom-left-radius: 80px;
+        border-right: 0;
+        -webkit-transform-origin: center right;
+        transform-origin: center right;
+        animation: loading-1 1.8s linear forwards;
+    }
+
+    .progress .progress-value {
+        width: 85%;
+        height: 85%;
+        border-radius: 50%;
+        border: 2px solid #ebebeb;
+        font-size: 32px;
+        line-height: 125px;
+        text-align: center;
+        position: absolute;
+        top: 7.5%;
+        left: 7.5%;
+    }
+
+    .progress.blue .progress-bar {
+        border-color: #049dff;
+    }
+
+    .progress.blue .progress-value {
+        color: #049dff;
+    }
+
+    .progress.blue .progress-left .progress-bar {
+        animation: loading-4 1.5s linear forwards 1.8s;
+    }
+
+    .progress.yellow .progress-bar {
+        border-color: #fdba04;
+    }
+
+    .progress.yellow .progress-value {
+        color: #fdba04;
+    }
+
+    .progress.yellow .progress-left .progress-bar {
+        animation: loading-6 1s linear forwards 1.8s;
+    }
+
+    .progress.pink .progress-bar {
+        border-color: #ed687c;
+    }
+
+    .progress.pink .progress-value {
+        color: #ed687c;
+    }
+
+    .progress.pink .progress-left .progress-bar {
+        animation: loading-4 0.4s linear forwards 1.8s;
+    }
+
+    .progress.green .progress-bar {
+        border-color: #1abc9c;
+    }
+
+    .progress.green .progress-value {
+        color: #1abc9c;
+    }
+
+    .progress.green .progress-left .progress-bar {
+        animation: loading-6 1.2s linear forwards 1.8s;
+    }
+
+    @keyframes loading-1 {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+        }
+    }
+
+    @keyframes loading-2 {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(144deg);
+            transform: rotate(144deg);
+        }
+    }
+
+    @keyframes loading-3 {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+        }
+    }
+
+    @keyframes loading-4 {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(36deg);
+            transform: rotate(36deg);
+        }
+    }
+
+    @keyframes loading-6 {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+    }
+
+    @keyframes loading-5 {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(126deg);
+            transform: rotate(126deg);
+        }
+    }
+
+    @media only screen and (max-width: 990px) {
+        .progress {
+            margin-bottom: 20px;
+        }
+    }
+
+    License Terms
+</style>
+
+<body style="font-family: 'Poppins', sans-serif;">
+    <div id="body-top" class="bg-primary">
+        <div class="mx-5 ">
+            <nav class="navbar navbar-expand-lg navbar-light ">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                        <ion-icon style="color:rgb(255, 125, 125)" size="large" name="color-filter-outline"></ion-icon>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="#">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#contact">Contact</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#education">Education</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#skills">Skills</a>
+                            </li>
+
+                        </ul>
+                        <ul class="navbar-nav mb-2 mb-lg-0">
+                            <li class="nav-item float mr-auto">
+                                <a class="nav-link active" href="#more">More :D</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="container my-lg-2 px-4 py-4">
+            <div class="row row-cols-2 py-lg-5">
+                <div class="col py-lg-5 ">
+                    <h2>Hello, I'am</h2>
+                    <h1 class="text-secondary">Maldini</h1>
+                    <h2 class="text-black-50">Flutter Developer</h2>
+                    <p>
+                        I am a D-III informatics engineering student from Poliwangi and focused on the mobile field.</p>
+                </div>
+                <div class="col row-cols-5">
+                    <img src="images/undraw_Hello_re_3evm.svg" class="w-100" alt="Hello">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="contact" class="bg-light my-n2 position-relative py-5 mx-auto">
+        <h2 class="my-5 position-absolute top-0 start-50 translate-middle">Contact Me</h2>
+        <div class="row g-1 px-5 pt-8">
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src="images/undraw_version_control_re_mg66.svg" class="card-img-top p-5" alt="email">
+                    <div class="card-body mx-auto">
+                        <h3 class="text-center">Github</h3>
+                        <p class="card-text px-2 text-center">maldinipunisher</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src="images/undraw_startup_life_2du2.svg" class="card-img-top p-5" alt="email">
+                    <div class="card-body mx-auto">
+                        <h3 class="text-center">Instagram</h3>
+                        <p class="card-text px-2 text-center">@maldiniputra</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src="images/undraw_Personal_email_re_4lx7.svg" class="card-img-top p-5" alt="email">
+                    <div class="card-body mx-auto">
+                        <h3 class="text-center">Email</h3>
+                        <p class="card-text px-2 text-center">maldinidp54@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src="images/undraw_businessman_97x4.svg" class="card-img-top p-5" alt="email">
+                    <div class="card-body mx-auto">
+                        <h3 class="text-center">Phone</h3>
+                        <p class="card-text px-2 text-center">+6282236937146</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="education" class="container-fluid bg-light">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title mb-5">Education</h4>
+
+                        <div class="hori-timeline" dir="ltr">
+                            <ul class="list-inline events">
+                                <li class="list-inline-item event-list">
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-primary text-danger">2007</div>
+                                        <h5 class="font-size-16">SDN 1 WATUKEBO</h5>
+                                        <p class="text-muted">Finished</p>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item event-list">
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-success text-success">2013</div>
+                                        <h5 class="font-size-16">SMPN 2 ROGOJAMPI</h5>
+                                        <p class="text-muted">Finished</p>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item event-list">
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-danger text-danger">2016</div>
+                                        <h5 class="font-size-16">SMKN 1 GLAGAH</h5>
+                                        <p class="text-muted">Finished</p>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item event-list">
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-warning text-warning">2019</div>
+                                        <h5 class="font-size-16">POLIWANGI</h5>
+                                        <p class="text-muted">Now</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- end card -->
+            </div>
+        </div>
+
+        <div id="skills" class="bg-white py-5 px-4">
+            <h3 class="py-2">Skills</h3>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6">
+                        <h5 class="text-center pb-4">Flutter</h5>
+                        <div class="progress blue">
+                            <span class="progress-left">
+                                <span class="progress-bar"></span>
+                            </span>
+                            <span class="progress-right">
+                                <span class="progress-bar"></span>
+                            </span>
+                            <div class="progress-value">60%</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6">
+                        <h5 class="text-center pb-4">Unity</h5>
+
+                        <div class="progress pink">
+                            <span class="progress-left">
+                                <span class="progress-bar"></span>
+                            </span>
+                            <span class="progress-right">
+                                <span class="progress-bar"></span>
+                            </span>
+                            <div class="progress-value">60%</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6">
+                        <h5 class="text-center pb-4">CSS</h5>
+                        <div class="progress yellow">
+                            <span class="progress-left">
+                                <span class="progress-bar"></span>
+                            </span>
+                            <span class="progress-right">
+                                <span class="progress-bar"></span>
+                            </span>
+                            <div class="progress-value">50%</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6">
+                        <h5 class="text-center pb-4">HTML</h5>
+
+                        <div class="progress green">
+                            <span class="progress-left">
+                                <span class="progress-bar"></span>
+                            </span>
+                            <span class="progress-right">
+                                <span class="progress-bar"></span>
+                            </span>
+                            <div class="progress-value">50%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <canvas id="more">
+            Browsernya tidak support bos, update ya...
+        </canvas>
+        <canvas id="3d">
+            Browsernya tidak support bos, update ya...
+        </canvas>
+        <p id="ket"></p>
+        <script src="node_modules/three/build/three.js"></script>
+        <script src="node_modules/three/examples/js/controls/OrbitControls.js"></script>
+        <script src="js/3d.js">
+        </script>
+        <script src="js/2d.js"></script>
+        <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>
